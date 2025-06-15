@@ -57,7 +57,7 @@ export default function GamePage() {
 
   useEffect(() => {
     if (!sessionId) {
-      alert("Сессия не найдена")
+      alert("Session not found")
       window.location.href = "/"
       return
     }
@@ -69,7 +69,7 @@ export default function GamePage() {
     try {
       const response = await fetch(`/api/session/${sessionId}`)
       if (!response.ok) {
-        throw new Error("Сессия не найдена")
+        throw new Error("Session not found")
       }
 
       const data = await response.json()
@@ -85,7 +85,7 @@ export default function GamePage() {
       })
     } catch (error) {
       console.error("Error loading session:", error)
-      alert("Ошибка загрузки сессии")
+      alert("Error loading session")
       window.location.href = "/"
     } finally {
       setInitialLoading(false)
@@ -113,12 +113,12 @@ export default function GamePage() {
       })
 
       if (!response.ok) {
-        throw new Error("Ошибка обработки действия")
+        throw new Error("Action processing error")
       }
 
       const data = await response.json()
 
-      // Обновляем игровые данные
+      // Update game data
       setGameData((prev) => {
         if (!prev) return null
 
@@ -131,7 +131,7 @@ export default function GamePage() {
           },
           {
             type: "roll" as const,
-            content: `Бросок d20: ${data.roll}`,
+            content: `d20 Roll: ${data.roll}`,
             roll: data.roll,
             timestamp: new Date().toISOString(),
           },
@@ -144,7 +144,7 @@ export default function GamePage() {
 
         let updatedCharacter = prev.character
 
-        // Обновляем персонажа
+        // Update character
         if (data.experienceGain) {
           updatedCharacter = {
             ...updatedCharacter,
@@ -182,7 +182,7 @@ export default function GamePage() {
       })
     } catch (error) {
       console.error("Error:", error)
-      alert("Ошибка отправки действия. Попробуйте еще раз.")
+      alert("Error sending action. Please try again.")
     } finally {
       setLoading(false)
     }
@@ -202,8 +202,8 @@ export default function GamePage() {
           ...prev.history,
           {
             type: "levelup" as const,
-            content: `🎉 Уровень повышен! +${reward.hpIncrease} HP, +${reward.skillPoints} очков навыков${
-              reward.newAbilities?.length ? `, новые способности: ${reward.newAbilities.join(", ")}` : ""
+            content: `🎉 Level Up! +${reward.hpIncrease} HP, +${reward.skillPoints} skill points${
+              reward.newAbilities?.length ? `, new abilities: ${reward.newAbilities.join(", ")}` : ""
             }`,
             timestamp: new Date().toISOString(),
           },
@@ -237,8 +237,8 @@ export default function GamePage() {
     const item = gameData.inventory.find((i) => i.id === itemId)
     if (!item || item.type !== "consumable") return
 
-    // Простая логика использования предметов
-    if (item.name.includes("лечения")) {
+    // Simple item usage logic
+    if (item.name.includes("Healing") || item.name.includes("Health")) {
       const healAmount = Math.floor(Math.random() * 8) + 4 // 2d4+2
       setGameData((prev) => {
         if (!prev) return null
@@ -255,7 +255,7 @@ export default function GamePage() {
             ...prev.history,
             {
               type: "dm" as const,
-              content: `Ты используешь ${item.name} и восстанавливаешь ${healAmount} очков здоровья.`,
+              content: `You use ${item.name} and restore ${healAmount} hit points.`,
               timestamp: new Date().toISOString(),
             },
           ],
@@ -279,7 +279,7 @@ export default function GamePage() {
           ...prev.history,
           {
             type: "dm" as const,
-            content: `Ты перемещаешься в новую локацию. Что будешь делать дальше?`,
+            content: `You travel to a new location. What will you do next?`,
             timestamp: new Date().toISOString(),
           },
         ],
@@ -287,46 +287,46 @@ export default function GamePage() {
     })
   }
 
-  // Функция для определения NPC в тексте
+  // Function to detect NPC voices in text
   const detectNPCVoices = (text: string) => {
     const voices = []
     const lowerText = text.toLowerCase()
 
-    if (lowerText.includes("милорд") || lowerText.includes("благоволите") || lowerText.includes("изволите")) {
-      voices.push({ name: "Благородный", color: "bg-purple-600" })
+    if (lowerText.includes("my lord") || lowerText.includes("your grace") || lowerText.includes("noble")) {
+      voices.push({ name: "Noble", color: "bg-purple-600" })
     }
-    if (lowerText.includes("золотишко") || lowerText.includes("сделочка") || lowerText.includes("барышик")) {
-      voices.push({ name: "Торговец", color: "bg-yellow-600" })
+    if (lowerText.includes("gold") || lowerText.includes("deal") || lowerText.includes("trade")) {
+      voices.push({ name: "Merchant", color: "bg-yellow-600" })
     }
-    if (lowerText.includes("приказ") || lowerText.includes("дисциплина") || lowerText.includes("стой!")) {
-      voices.push({ name: "Стражник", color: "bg-red-600" })
+    if (lowerText.includes("halt") || lowerText.includes("order") || lowerText.includes("law")) {
+      voices.push({ name: "Guard", color: "bg-red-600" })
     }
-    if (lowerText.includes("батюшка") || lowerText.includes("горемычный") || lowerText.includes("нужда")) {
-      voices.push({ name: "Крестьянин", color: "bg-green-600" })
+    if (lowerText.includes("good sir") || lowerText.includes("humble") || lowerText.includes("please")) {
+      voices.push({ name: "Peasant", color: "bg-green-600" })
     }
-    if (lowerText.includes("феномен") || lowerText.includes("гипотеза") || lowerText.includes("артефакт")) {
-      voices.push({ name: "Ученый", color: "bg-blue-600" })
+    if (lowerText.includes("research") || lowerText.includes("study") || lowerText.includes("knowledge")) {
+      voices.push({ name: "Scholar", color: "bg-blue-600" })
     }
-    if (lowerText.includes("дельце") || lowerText.includes("шухер") || lowerText.includes("наводка")) {
-      voices.push({ name: "Плут", color: "bg-gray-600" })
+    if (lowerText.includes("shadows") || lowerText.includes("quiet") || lowerText.includes("secret")) {
+      voices.push({ name: "Rogue", color: "bg-gray-600" })
     }
-    if (lowerText.includes("благословение") || lowerText.includes("покаяние") || lowerText.includes("божество")) {
-      voices.push({ name: "Жрец", color: "bg-indigo-600" })
+    if (lowerText.includes("blessing") || lowerText.includes("divine") || lowerText.includes("prayer")) {
+      voices.push({ name: "Priest", color: "bg-indigo-600" })
     }
-    if (lowerText.includes("сила решает") || lowerText.includes("честь воина") || lowerText.includes("битва")) {
-      voices.push({ name: "Варвар", color: "bg-orange-600" })
+    if (lowerText.includes("strength") || lowerText.includes("battle") || lowerText.includes("warrior")) {
+      voices.push({ name: "Barbarian", color: "bg-orange-600" })
     }
-    if (lowerText.includes("дядя") || lowerText.includes("страшно") || lowerText.includes("интересно")) {
-      voices.push({ name: "Ребенок", color: "bg-pink-600" })
+    if (lowerText.includes("uncle") || lowerText.includes("scary") || lowerText.includes("fun")) {
+      voices.push({ name: "Child", color: "bg-pink-600" })
     }
-    if (lowerText.includes("в мои годы") || lowerText.includes("мудрость") || lowerText.includes("опыт")) {
-      voices.push({ name: "Старец", color: "bg-amber-600" })
+    if (lowerText.includes("years") || lowerText.includes("wisdom") || lowerText.includes("experience")) {
+      voices.push({ name: "Elder", color: "bg-amber-600" })
     }
-    if (lowerText.includes("гость") || lowerText.includes("угощение") || lowerText.includes("добро пожаловать")) {
-      voices.push({ name: "Трактирщик", color: "bg-teal-600" })
+    if (lowerText.includes("welcome") || lowerText.includes("drink") || lowerText.includes("room")) {
+      voices.push({ name: "Innkeeper", color: "bg-teal-600" })
     }
-    if (lowerText.includes("глупец") || lowerText.includes("власть") || lowerText.includes("месть")) {
-      voices.push({ name: "Злодей", color: "bg-black" })
+    if (lowerText.includes("fool") || lowerText.includes("power") || lowerText.includes("revenge")) {
+      voices.push({ name: "Villain", color: "bg-black" })
     }
 
     return voices
@@ -335,7 +335,7 @@ export default function GamePage() {
   if (initialLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-xl">Загрузка игры...</div>
+        <div className="text-white text-xl">Loading game...</div>
       </div>
     )
   }
@@ -343,7 +343,7 @@ export default function GamePage() {
   if (!gameData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-xl">Данные игры не найдены</div>
+        <div className="text-white text-xl">Game data not found</div>
       </div>
     )
   }
@@ -351,7 +351,7 @@ export default function GamePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4">
       <div className="max-w-7xl mx-auto">
-        {/* Информация о персонаже */}
+        {/* Character Information */}
         <Card className="mb-4 bg-slate-800 border-slate-700 text-white">
           <CardHeader>
             <CardTitle className="text-xl flex items-center justify-between">
@@ -365,11 +365,11 @@ export default function GamePage() {
                   </span>
                   <Progress value={(gameData.character.hp / gameData.character.maxHp) * 100} className="w-20 h-2" />
                 </div>
-                <span className="text-yellow-400">💰 {gameData.character.gold} золота</span>
-                <span className="text-blue-400">⭐ Уровень {gameData.character.level}</span>
+                <span className="text-yellow-400">💰 {gameData.character.gold} gold</span>
+                <span className="text-blue-400">⭐ Level {gameData.character.level}</span>
                 {canLevelUp(gameData.character) && (
                   <Button onClick={handleLevelUp} size="sm" className="bg-yellow-600 hover:bg-yellow-700 animate-pulse">
-                    Повысить уровень!
+                    Level Up!
                   </Button>
                 )}
               </div>
@@ -387,44 +387,44 @@ export default function GamePage() {
           </CardContent>
         </Card>
 
-        {/* Основные вкладки */}
+        {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-5 bg-slate-800 mb-4">
-            <TabsTrigger value="game">🎮 Игра</TabsTrigger>
-            <TabsTrigger value="character">📋 Персонаж</TabsTrigger>
-            <TabsTrigger value="inventory">🎒 Инвентарь</TabsTrigger>
-            <TabsTrigger value="map">🗺️ Карта</TabsTrigger>
-            <TabsTrigger value="quests">📋 Квесты</TabsTrigger>
+            <TabsTrigger value="game">🎮 Game</TabsTrigger>
+            <TabsTrigger value="character">📋 Character</TabsTrigger>
+            <TabsTrigger value="inventory">🎒 Inventory</TabsTrigger>
+            <TabsTrigger value="map">🗺️ Map</TabsTrigger>
+            <TabsTrigger value="quests">📋 Quests</TabsTrigger>
           </TabsList>
 
           <TabsContent value="game">
-            {/* Легенда голосов NPC */}
+            {/* NPC Voice Legend */}
             <Card className="mb-4 bg-slate-800 border-slate-700 text-white">
               <CardHeader>
-                <CardTitle className="text-lg">🎭 Голоса персонажей</CardTitle>
+                <CardTitle className="text-lg">🎭 Character Voices</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 text-xs">
-                  <Badge className="bg-purple-600 text-white">Благородный</Badge>
-                  <Badge className="bg-yellow-600 text-white">Торговец</Badge>
-                  <Badge className="bg-red-600 text-white">Стражник</Badge>
-                  <Badge className="bg-green-600 text-white">Крестьянин</Badge>
-                  <Badge className="bg-blue-600 text-white">Ученый</Badge>
-                  <Badge className="bg-gray-600 text-white">Плут</Badge>
-                  <Badge className="bg-indigo-600 text-white">Жрец</Badge>
-                  <Badge className="bg-orange-600 text-white">Варвар</Badge>
-                  <Badge className="bg-pink-600 text-white">Ребенок</Badge>
-                  <Badge className="bg-amber-600 text-white">Старец</Badge>
-                  <Badge className="bg-teal-600 text-white">Трактирщик</Badge>
-                  <Badge className="bg-black text-white">Злодей</Badge>
+                  <Badge className="bg-purple-600 text-white">Noble</Badge>
+                  <Badge className="bg-yellow-600 text-white">Merchant</Badge>
+                  <Badge className="bg-red-600 text-white">Guard</Badge>
+                  <Badge className="bg-green-600 text-white">Peasant</Badge>
+                  <Badge className="bg-blue-600 text-white">Scholar</Badge>
+                  <Badge className="bg-gray-600 text-white">Rogue</Badge>
+                  <Badge className="bg-indigo-600 text-white">Priest</Badge>
+                  <Badge className="bg-orange-600 text-white">Barbarian</Badge>
+                  <Badge className="bg-pink-600 text-white">Child</Badge>
+                  <Badge className="bg-amber-600 text-white">Elder</Badge>
+                  <Badge className="bg-teal-600 text-white">Innkeeper</Badge>
+                  <Badge className="bg-black text-white">Villain</Badge>
                 </div>
               </CardContent>
             </Card>
 
-            {/* История игры */}
+            {/* Game History */}
             <Card className="mb-4 bg-slate-800 border-slate-700 text-white">
               <CardHeader>
-                <CardTitle>📖 Хроника приключений</CardTitle>
+                <CardTitle>📖 Adventure Chronicle</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="h-96 overflow-y-auto space-y-3 mb-4">
@@ -443,13 +443,13 @@ export default function GamePage() {
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
                             <div className="font-semibold text-sm text-slate-300">
-                              {item.type === "player" && "Ты:"}
-                              {item.type === "roll" && "Бросок:"}
+                              {item.type === "player" && "You:"}
+                              {item.type === "roll" && "Roll:"}
                               {item.type === "dm" && "DM:"}
-                              {item.type === "levelup" && "Уровень:"}
-                              {item.type === "combat" && "Бой:"}
+                              {item.type === "levelup" && "Level:"}
+                              {item.type === "combat" && "Combat:"}
                             </div>
-                            {/* Показываем голоса NPC */}
+                            {/* Show NPC voices */}
                             {npcVoices.map((voice, voiceIndex) => (
                               <Badge key={voiceIndex} className={`${voice.color} text-white text-xs`}>
                                 {voice.name}
@@ -470,7 +470,7 @@ export default function GamePage() {
                             }`}
                           >
                             {item.content}
-                            {/* Индикатор завершенности для DM ответов */}
+                            {/* Completion indicator for DM responses */}
                             {item.type === "dm" && item.content.match(/[.!?]$/) && (
                               <span className="text-green-500 ml-1 text-xs">✓</span>
                             )}
@@ -483,7 +483,7 @@ export default function GamePage() {
                     <div className="flex items-center space-x-2 text-slate-400">
                       <div className="text-lg">🧙</div>
                       <div className="flex-1">
-                        <div className="font-semibold text-sm">DM обдумывает ответ...</div>
+                        <div className="font-semibold text-sm">DM is thinking...</div>
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
                           <div
@@ -501,13 +501,13 @@ export default function GamePage() {
                   <div ref={messagesEndRef} />
                 </div>
 
-                {/* Форма ввода действия */}
+                {/* Action Input Form */}
                 <form onSubmit={handleSubmit} className="flex space-x-2">
                   <Input
                     type="text"
                     value={actionText}
                     onChange={(e) => setActionText(e.target.value)}
-                    placeholder="Опишите ваше действие..."
+                    placeholder="Describe your action..."
                     className="flex-1 bg-slate-700 border-slate-600 text-white placeholder-slate-400"
                     disabled={loading}
                   />
@@ -520,9 +520,9 @@ export default function GamePage() {
                   </Button>
                 </form>
 
-                {/* Подсказки для игрока */}
+                {/* Player Tips */}
                 <div className="mt-2 text-xs text-slate-400">
-                  💡 Совет: Говорите с NPC для получения уникальных диалогов и информации
+                  💡 Tip: Talk to NPCs for unique dialogues and information
                 </div>
               </CardContent>
             </Card>
@@ -564,14 +564,14 @@ export default function GamePage() {
           </TabsContent>
         </Tabs>
 
-        {/* Кнопка возврата */}
+        {/* Return Button */}
         <div className="text-center mt-4">
           <Button
             onClick={() => (window.location.href = "/")}
             variant="outline"
             className="border-slate-600 text-slate-300 hover:bg-slate-700"
           >
-            🏠 Создать нового персонажа
+            🏠 Create New Character
           </Button>
         </div>
       </div>

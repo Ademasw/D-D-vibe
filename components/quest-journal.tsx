@@ -45,7 +45,7 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
   }
 
   const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString("ru-RU", {
+    return new Date(date).toLocaleDateString("en-US", {
       day: "numeric",
       month: "short",
       year: "numeric",
@@ -56,22 +56,22 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
     <Card className="bg-slate-800 border-slate-700 text-white">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          <span>📋 Журнал квестов</span>
+          <span>📋 Quest Journal</span>
           <div className="flex gap-2 text-sm">
-            <Badge className="bg-blue-600 text-white">{activeQuests.length} активных</Badge>
-            <Badge className="bg-green-600 text-white">{completedQuests.length} выполнено</Badge>
+            <Badge className="bg-blue-600 text-white">{activeQuests.length} active</Badge>
+            <Badge className="bg-green-600 text-white">{completedQuests.length} completed</Badge>
           </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {/* Список квестов */}
+          {/* Quest List */}
           <div className="lg:col-span-2">
             <Tabs defaultValue="active" className="w-full">
               <TabsList className="grid w-full grid-cols-3 bg-slate-700">
-                <TabsTrigger value="active">Активные ({activeQuests.length})</TabsTrigger>
-                <TabsTrigger value="completed">Выполненные ({completedQuests.length})</TabsTrigger>
-                <TabsTrigger value="failed">Провалены ({failedQuests.length})</TabsTrigger>
+                <TabsTrigger value="active">Active ({activeQuests.length})</TabsTrigger>
+                <TabsTrigger value="completed">Completed ({completedQuests.length})</TabsTrigger>
+                <TabsTrigger value="failed">Failed ({failedQuests.length})</TabsTrigger>
               </TabsList>
 
               <TabsContent value="active" className="space-y-2 max-h-80 overflow-y-auto">
@@ -93,7 +93,7 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
                           <div>
                             <h3 className="font-semibold">{quest.title}</h3>
                             <p className="text-xs text-slate-400">
-                              {quest.giver && `От: ${quest.giver}`}
+                              {quest.giver && `From: ${quest.giver}`}
                               {quest.location && ` • ${quest.location}`}
                             </p>
                           </div>
@@ -103,7 +103,7 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
 
                       <div className="mb-2">
                         <div className="flex justify-between text-xs text-slate-400 mb-1">
-                          <span>Прогресс</span>
+                          <span>Progress</span>
                           <span>
                             {progress.completed}/{progress.total}
                           </span>
@@ -115,9 +115,7 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
                     </div>
                   )
                 })}
-                {activeQuests.length === 0 && (
-                  <div className="text-center text-slate-400 py-8">Нет активных квестов</div>
-                )}
+                {activeQuests.length === 0 && <div className="text-center text-slate-400 py-8">No active quests</div>}
               </TabsContent>
 
               <TabsContent value="completed" className="space-y-2 max-h-80 overflow-y-auto">
@@ -137,7 +135,7 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
                         <div>
                           <h3 className="font-semibold">{quest.title}</h3>
                           <p className="text-xs text-slate-400">
-                            Выполнено: {quest.completedAt && formatDate(quest.completedAt)}
+                            Completed: {quest.completedAt && formatDate(quest.completedAt)}
                           </p>
                         </div>
                       </div>
@@ -147,7 +145,7 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
                   </div>
                 ))}
                 {completedQuests.length === 0 && (
-                  <div className="text-center text-slate-400 py-8">Нет выполненных квестов</div>
+                  <div className="text-center text-slate-400 py-8">No completed quests</div>
                 )}
               </TabsContent>
 
@@ -167,7 +165,7 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
                         <span className="text-lg">{getStatusIcon(quest.status)}</span>
                         <div>
                           <h3 className="font-semibold text-red-400">{quest.title}</h3>
-                          <p className="text-xs text-slate-400">{quest.giver && `От: ${quest.giver}`}</p>
+                          <p className="text-xs text-slate-400">{quest.giver && `From: ${quest.giver}`}</p>
                         </div>
                       </div>
                       <Badge className={`${getStatusColor(quest.status)} text-white text-xs`}>{quest.status}</Badge>
@@ -175,14 +173,12 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
                     <p className="text-sm text-slate-300 line-clamp-2">{quest.description}</p>
                   </div>
                 ))}
-                {failedQuests.length === 0 && (
-                  <div className="text-center text-slate-400 py-8">Нет проваленных квестов</div>
-                )}
+                {failedQuests.length === 0 && <div className="text-center text-slate-400 py-8">No failed quests</div>}
               </TabsContent>
             </Tabs>
           </div>
 
-          {/* Детали квеста */}
+          {/* Quest Details */}
           <div className="space-y-4">
             {selectedQuest ? (
               <div className="p-3 bg-slate-700 rounded">
@@ -198,9 +194,9 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
 
                 <p className="text-sm text-slate-300 mb-3">{selectedQuest.description}</p>
 
-                {/* Цели квеста */}
+                {/* Quest Objectives */}
                 <div className="mb-3">
-                  <h4 className="text-sm font-semibold text-slate-400 mb-2">Цели:</h4>
+                  <h4 className="text-sm font-semibold text-slate-400 mb-2">Objectives:</h4>
                   <div className="space-y-1">
                     {selectedQuest.objectives.map((objective) => (
                       <div key={objective.id} className="flex items-center gap-2 text-sm">
@@ -215,26 +211,26 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
                   </div>
                 </div>
 
-                {/* Награда */}
+                {/* Reward */}
                 {selectedQuest.reward && (
                   <div className="mb-3">
-                    <h4 className="text-sm font-semibold text-slate-400 mb-2">Награда:</h4>
+                    <h4 className="text-sm font-semibold text-slate-400 mb-2">Reward:</h4>
                     <div className="text-sm text-slate-300 space-y-1">
-                      {selectedQuest.reward.gold && <div>💰 {selectedQuest.reward.gold} золота</div>}
-                      {selectedQuest.reward.experience && <div>⭐ {selectedQuest.reward.experience} опыта</div>}
+                      {selectedQuest.reward.gold && <div>💰 {selectedQuest.reward.gold} gold</div>}
+                      {selectedQuest.reward.experience && <div>⭐ {selectedQuest.reward.experience} XP</div>}
                       {selectedQuest.reward.items && selectedQuest.reward.items.length > 0 && (
-                        <div>🎁 {selectedQuest.reward.items.length} предмет(ов)</div>
+                        <div>🎁 {selectedQuest.reward.items.length} item(s)</div>
                       )}
                     </div>
                   </div>
                 )}
 
-                {/* Информация */}
+                {/* Information */}
                 <div className="text-xs text-slate-400 space-y-1">
-                  {selectedQuest.giver && <div>Квестодатель: {selectedQuest.giver}</div>}
-                  {selectedQuest.location && <div>Локация: {selectedQuest.location}</div>}
-                  <div>Получен: {formatDate(selectedQuest.createdAt)}</div>
-                  {selectedQuest.completedAt && <div>Выполнен: {formatDate(selectedQuest.completedAt)}</div>}
+                  {selectedQuest.giver && <div>Quest Giver: {selectedQuest.giver}</div>}
+                  {selectedQuest.location && <div>Location: {selectedQuest.location}</div>}
+                  <div>Received: {formatDate(selectedQuest.createdAt)}</div>
+                  {selectedQuest.completedAt && <div>Completed: {formatDate(selectedQuest.completedAt)}</div>}
                 </div>
 
                 {selectedQuest.status === "active" && onAbandonQuest && (
@@ -243,27 +239,25 @@ export function QuestJournal({ quests, onAbandonQuest }: QuestJournalProps) {
                     className="w-full mt-3 bg-red-600 hover:bg-red-700"
                     size="sm"
                   >
-                    Отказаться от квеста
+                    Abandon Quest
                   </Button>
                 )}
               </div>
             ) : (
-              <div className="p-3 bg-slate-700 rounded text-center text-slate-400">
-                Выберите квест для просмотра деталей
-              </div>
+              <div className="p-3 bg-slate-700 rounded text-center text-slate-400">Select a quest to view details</div>
             )}
 
-            {/* Статистика */}
+            {/* Statistics */}
             <div className="p-3 bg-slate-700 rounded text-sm">
-              <h4 className="font-semibold mb-2">📊 Статистика</h4>
+              <h4 className="font-semibold mb-2">📊 Statistics</h4>
               <div className="space-y-1 text-slate-300">
-                <div>Всего квестов: {quests.length}</div>
-                <div>Активных: {activeQuests.length}</div>
-                <div>Выполнено: {completedQuests.length}</div>
-                <div>Провалено: {failedQuests.length}</div>
+                <div>Total quests: {quests.length}</div>
+                <div>Active: {activeQuests.length}</div>
+                <div>Completed: {completedQuests.length}</div>
+                <div>Failed: {failedQuests.length}</div>
                 {completedQuests.length > 0 && (
                   <div>
-                    Успешность:{" "}
+                    Success rate:{" "}
                     {Math.round((completedQuests.length / (completedQuests.length + failedQuests.length)) * 100)}%
                   </div>
                 )}

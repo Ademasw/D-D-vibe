@@ -1,11 +1,11 @@
 import type { Location, InventoryItem, Quest } from "./types"
 
-// Локации игрового мира
+// Game world locations
 export const WORLD_LOCATIONS: Location[] = [
   {
     id: "goldenheart-tavern",
-    name: "Таверна 'Золотое Сердце'",
-    description: "Уютная таверна в центре города, где собираются авантюристы",
+    name: "Golden Heart Tavern",
+    description: "A cozy tavern in the city center where adventurers gather",
     type: "town",
     connections: ["town-square", "market-district"],
     discovered: true,
@@ -14,8 +14,8 @@ export const WORLD_LOCATIONS: Location[] = [
   },
   {
     id: "town-square",
-    name: "Городская площадь",
-    description: "Центральная площадь города с фонтаном и статуей героя",
+    name: "Town Square",
+    description: "The central square of the city with a fountain and hero statue",
     type: "town",
     connections: ["goldenheart-tavern", "market-district", "temple", "north-gate"],
     discovered: true,
@@ -24,8 +24,8 @@ export const WORLD_LOCATIONS: Location[] = [
   },
   {
     id: "market-district",
-    name: "Торговый квартал",
-    description: "Шумный район с лавками, магазинами и торговцами",
+    name: "Market District",
+    description: "A bustling area with shops, stores, and merchants",
     type: "town",
     connections: ["town-square", "goldenheart-tavern"],
     discovered: true,
@@ -34,8 +34,8 @@ export const WORLD_LOCATIONS: Location[] = [
   },
   {
     id: "temple",
-    name: "Храм Света",
-    description: "Величественный храм с высокими колоннами и витражами",
+    name: "Temple of Light",
+    description: "A magnificent temple with tall columns and stained glass",
     type: "landmark",
     connections: ["town-square"],
     discovered: false,
@@ -44,8 +44,8 @@ export const WORLD_LOCATIONS: Location[] = [
   },
   {
     id: "north-gate",
-    name: "Северные ворота",
-    description: "Массивные ворота, ведущие к северным землям",
+    name: "North Gate",
+    description: "Massive gates leading to the northern lands",
     type: "town",
     connections: ["town-square", "dark-forest"],
     discovered: false,
@@ -54,8 +54,8 @@ export const WORLD_LOCATIONS: Location[] = [
   },
   {
     id: "dark-forest",
-    name: "Темный лес",
-    description: "Мрачный лес, полный опасностей и тайн",
+    name: "Dark Forest",
+    description: "A gloomy forest full of dangers and secrets",
     type: "wilderness",
     connections: ["north-gate", "ancient-ruins"],
     discovered: false,
@@ -64,8 +64,8 @@ export const WORLD_LOCATIONS: Location[] = [
   },
   {
     id: "ancient-ruins",
-    name: "Древние руины",
-    description: "Загадочные руины древней цивилизации",
+    name: "Ancient Ruins",
+    description: "Mysterious ruins of an ancient civilization",
     type: "dungeon",
     connections: ["dark-forest"],
     discovered: false,
@@ -74,8 +74,8 @@ export const WORLD_LOCATIONS: Location[] = [
   },
   {
     id: "goblin-cave",
-    name: "Пещера гоблинов",
-    description: "Темная пещера, где обитают гоблины",
+    name: "Goblin Cave",
+    description: "A dark cave where goblins dwell",
     type: "dungeon",
     connections: ["dark-forest"],
     discovered: false,
@@ -84,14 +84,14 @@ export const WORLD_LOCATIONS: Location[] = [
   },
 ]
 
-// Улучшенные стартовые предметы по классам
+// Enhanced starting items by class
 export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
   Fighter: [
     {
       id: "longsword",
-      name: "Длинный меч",
+      name: "Longsword",
       type: "weapon",
-      description: "Качественный боевой меч с острым лезвием",
+      description: "A quality battle sword with a sharp blade",
       quantity: 1,
       value: 25,
       rarity: "common",
@@ -100,9 +100,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "chain-mail",
-      name: "Кольчуга",
+      name: "Chain Mail",
       type: "armor",
-      description: "Прочная кольчуга для защиты в бою",
+      description: "Sturdy chain mail for protection in battle",
       quantity: 1,
       value: 75,
       rarity: "common",
@@ -111,9 +111,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "shield",
-      name: "Щит",
+      name: "Shield",
       type: "armor",
-      description: "Деревянный щит с металлическими накладками",
+      description: "A wooden shield with metal reinforcements",
       quantity: 1,
       value: 10,
       rarity: "common",
@@ -124,9 +124,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
   Wizard: [
     {
       id: "quarterstaff",
-      name: "Боевой посох",
+      name: "Quarterstaff",
       type: "weapon",
-      description: "Деревянный посох для фокусировки магии и самозащиты",
+      description: "A wooden staff for focusing magic and self-defense",
       quantity: 1,
       value: 2,
       rarity: "common",
@@ -135,9 +135,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "spellbook",
-      name: "Книга заклинаний",
+      name: "Spellbook",
       type: "tool",
-      description: "Личная книга заклинаний начинающего мага",
+      description: "A personal spellbook for a beginning wizard",
       quantity: 1,
       value: 50,
       rarity: "uncommon",
@@ -145,9 +145,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "component-pouch",
-      name: "Мешочек компонентов",
+      name: "Component Pouch",
       type: "tool",
-      description: "Мешочек с материальными компонентами для заклинаний",
+      description: "A pouch with material components for spells",
       quantity: 1,
       value: 25,
       rarity: "common",
@@ -157,9 +157,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
   Rogue: [
     {
       id: "shortsword",
-      name: "Короткий меч",
+      name: "Shortsword",
       type: "weapon",
-      description: "Легкий и быстрый клинок для скрытых атак",
+      description: "A light and fast blade for sneak attacks",
       quantity: 1,
       value: 10,
       rarity: "common",
@@ -168,9 +168,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "dagger-set",
-      name: "Набор кинжалов",
+      name: "Dagger Set",
       type: "weapon",
-      description: "Два острых кинжала для метания и ближнего боя",
+      description: "Two sharp daggers for throwing and melee combat",
       quantity: 2,
       value: 4,
       rarity: "common",
@@ -179,9 +179,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "thieves-tools",
-      name: "Воровские инструменты",
+      name: "Thieves' Tools",
       type: "tool",
-      description: "Профессиональный набор для взлома замков",
+      description: "Professional tools for picking locks",
       quantity: 1,
       value: 25,
       rarity: "common",
@@ -189,9 +189,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "leather-armor",
-      name: "Кожаная броня",
+      name: "Leather Armor",
       type: "armor",
-      description: "Легкая кожаная броня, не мешающая скрытности",
+      description: "Light leather armor that doesn't hinder stealth",
       quantity: 1,
       value: 10,
       rarity: "common",
@@ -202,9 +202,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
   Cleric: [
     {
       id: "war-hammer",
-      name: "Боевой молот",
+      name: "Warhammer",
       type: "weapon",
-      description: "Священное оружие для борьбы со злом",
+      description: "A sacred weapon for fighting evil",
       quantity: 1,
       value: 15,
       rarity: "common",
@@ -213,9 +213,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "holy-symbol",
-      name: "Священный символ",
+      name: "Holy Symbol",
       type: "tool",
-      description: "Символ божества для сотворения чудес",
+      description: "A symbol of your deity for performing miracles",
       quantity: 1,
       value: 5,
       rarity: "common",
@@ -223,9 +223,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "scale-mail",
-      name: "Чешуйчатая броня",
+      name: "Scale Mail",
       type: "armor",
-      description: "Броня из металлических чешуек",
+      description: "Armor made of metal scales",
       quantity: 1,
       value: 50,
       rarity: "common",
@@ -236,9 +236,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
   Ranger: [
     {
       id: "longbow",
-      name: "Длинный лук",
+      name: "Longbow",
       type: "weapon",
-      description: "Мощный лук для дальних атак",
+      description: "A powerful bow for ranged attacks",
       quantity: 1,
       value: 50,
       rarity: "common",
@@ -247,9 +247,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "arrows",
-      name: "Стрелы",
+      name: "Arrows",
       type: "weapon",
-      description: "Колчан с 30 стрелами",
+      description: "A quiver with 30 arrows",
       quantity: 30,
       value: 1,
       rarity: "common",
@@ -257,9 +257,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "scimitar",
-      name: "Скимитар",
+      name: "Scimitar",
       type: "weapon",
-      description: "Изогнутый клинок для ближнего боя",
+      description: "A curved blade for melee combat",
       quantity: 1,
       value: 25,
       rarity: "common",
@@ -270,9 +270,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
   Barbarian: [
     {
       id: "greataxe",
-      name: "Большой топор",
+      name: "Greataxe",
       type: "weapon",
-      description: "Массивный двуручный топор варвара",
+      description: "A massive two-handed barbarian axe",
       quantity: 1,
       value: 30,
       rarity: "common",
@@ -281,9 +281,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "handaxe-set",
-      name: "Ручные топоры",
+      name: "Handaxes",
       type: "weapon",
-      description: "Два ручных топора для метания",
+      description: "Two handaxes for throwing",
       quantity: 2,
       value: 5,
       rarity: "common",
@@ -294,9 +294,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
   Bard: [
     {
       id: "rapier",
-      name: "Рапира",
+      name: "Rapier",
       type: "weapon",
-      description: "Элегантный клинок для фехтования",
+      description: "An elegant blade for fencing",
       quantity: 1,
       value: 25,
       rarity: "common",
@@ -305,9 +305,9 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
     },
     {
       id: "lute",
-      name: "Лютня",
+      name: "Lute",
       type: "tool",
-      description: "Музыкальный инструмент для заклинаний",
+      description: "A musical instrument for spells",
       quantity: 1,
       value: 35,
       rarity: "common",
@@ -317,36 +317,36 @@ export const STARTING_ITEMS: { [key: string]: InventoryItem[] } = {
   Paladin: [
     {
       id: "longsword-blessed",
-      name: "Благословенный меч",
+      name: "Blessed Sword",
       type: "weapon",
-      description: "Длинный меч, освященный божественной силой",
+      description: "A longsword consecrated with divine power",
       quantity: 1,
       value: 50,
       rarity: "uncommon",
       weight: 3,
-      stats: { damage: "1d8+STR", bonus: "+1 против зла" },
+      stats: { damage: "1d8+STR", bonus: "+1 vs evil" },
     },
     {
       id: "chain-mail-blessed",
-      name: "Освященная кольчуга",
+      name: "Consecrated Chain Mail",
       type: "armor",
-      description: "Кольчуга, благословенная священником",
+      description: "Chain mail blessed by a priest",
       quantity: 1,
       value: 100,
       rarity: "uncommon",
       weight: 20,
-      stats: { armor: 16, bonus: "+1 против зла" },
+      stats: { armor: 16, bonus: "+1 vs evil" },
     },
   ],
 }
 
-// Общие стартовые предметы (одинаковые для всех)
+// Common starting items (same for all)
 export const COMMON_STARTING_ITEMS: InventoryItem[] = [
   {
     id: "health-potion",
-    name: "Зелье лечения",
+    name: "Healing Potion",
     type: "consumable",
-    description: "Восстанавливает 2d4+2 очков здоровья",
+    description: "Restores 2d4+2 hit points",
     quantity: 2,
     value: 50,
     rarity: "common",
@@ -354,9 +354,9 @@ export const COMMON_STARTING_ITEMS: InventoryItem[] = [
   },
   {
     id: "rations",
-    name: "Дорожный паек",
+    name: "Trail Rations",
     type: "consumable",
-    description: "Питательная еда на один день",
+    description: "Nutritious food for one day",
     quantity: 5,
     value: 2,
     rarity: "common",
@@ -364,9 +364,9 @@ export const COMMON_STARTING_ITEMS: InventoryItem[] = [
   },
   {
     id: "rope",
-    name: "Веревка (15 метров)",
+    name: "Rope (50 feet)",
     type: "tool",
-    description: "Прочная пеньковая веревка",
+    description: "Strong hemp rope",
     quantity: 1,
     value: 2,
     rarity: "common",
@@ -374,9 +374,9 @@ export const COMMON_STARTING_ITEMS: InventoryItem[] = [
   },
   {
     id: "torch",
-    name: "Факел",
+    name: "Torch",
     type: "tool",
-    description: "Освещает темноту на 6 часов",
+    description: "Illuminates darkness for 6 hours",
     quantity: 3,
     value: 1,
     rarity: "common",
@@ -384,27 +384,27 @@ export const COMMON_STARTING_ITEMS: InventoryItem[] = [
   },
 ]
 
-// Стартовые квесты
+// Starting quests
 export const STARTING_QUESTS: Quest[] = [
   {
     id: "welcome-quest",
-    title: "Добро пожаловать, авантюрист!",
-    description: "Познакомься с городом и его жителями",
+    title: "Welcome, Adventurer!",
+    description: "Get familiar with the city and its inhabitants",
     status: "active",
     objectives: [
       {
         id: "visit-tavern",
-        description: "Посетить таверну 'Золотое Сердце'",
+        description: "Visit the Golden Heart Tavern",
         completed: true,
       },
       {
         id: "talk-to-merchant",
-        description: "Поговорить с торговцем на рынке",
+        description: "Talk to a merchant in the market",
         completed: false,
       },
       {
         id: "explore-temple",
-        description: "Исследовать храм Света",
+        description: "Explore the Temple of Light",
         completed: false,
       },
     ],
@@ -412,7 +412,7 @@ export const STARTING_QUESTS: Quest[] = [
       gold: 50,
       experience: 100,
     },
-    giver: "Трактирщик",
+    giver: "Innkeeper",
     location: "goldenheart-tavern",
     createdAt: new Date(),
   },
